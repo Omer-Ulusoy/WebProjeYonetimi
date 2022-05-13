@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DbWebModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tbl_admin">
+          <Key>
+            <PropertyRef Name="admin_id" />
+          </Key>
+          <Property Name="admin_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="admin_adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="sifre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_hayvan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="il_id" Type="int" />
+          <Property Name="kucukbas" Type="int" />
+          <Property Name="buyukbas" Type="int" />
+          <Property Name="hayvan_tarih" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_iletisim">
+          <Key>
+            <PropertyRef Name="iletisim_id" />
+          </Key>
+          <Property Name="iletisim_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="yorumcu_adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="yorumcu_soyadi" Type="nvarchar" MaxLength="50" />
+          <Property Name="tc_kimlik_no" Type="nvarchar" MaxLength="11" />
+          <Property Name="dogum_yili" Type="nvarchar" MaxLength="4" />
+          <Property Name="gorus_ve_oneriler" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tbl_iller">
+          <Key>
+            <PropertyRef Name="il_id" />
+          </Key>
+          <Property Name="il_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="il_adi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="yuzolcumu" Type="int" />
+          <Property Name="nufus" Type="int" />
+          <Property Name="tarim_alani" Type="int" />
+          <Property Name="il_tarih" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tbl_meyve">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="il_id" Type="int" />
+          <Property Name="elma" Type="int" />
+          <Property Name="armut" Type="int" />
+          <Property Name="erik" Type="int" />
+          <Property Name="kayısı" Type="int" />
+          <Property Name="kiraz" Type="int" />
+          <Property Name="meyve_tarih" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tbl_sebze">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="il_id" Type="int" />
+          <Property Name="lahana" Type="int" />
+          <Property Name="domates" Type="int" />
+          <Property Name="fasulye" Type="int" />
+          <Property Name="salatalik" Type="int" />
+          <Property Name="yesil_biber" Type="int" />
+          <Property Name="sebze_tarih" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tbl_tarim_alani_ve_yuz_olcumu">
+          <Key>
+            <PropertyRef Name="tarim_alani_ve_yuz_olcumu_id" />
+          </Key>
+          <Property Name="tarim_alani_ve_yuz_olcumu_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="il_id" Type="int" />
+          <Property Name="nufus_bilgisi" Type="int" />
+          <Property Name="yuz_olcumu" Type="int" />
+          <Property Name="tarim_alani" Type="int" />
+          <Property Name="tarim_alani_ve_yuz_olcumu_tarih" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tbl_tarim_urunleri">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="il_id" Type="int" />
+          <Property Name="yesil_ot" Type="int" />
+          <Property Name="mısır" Type="int" />
+          <Property Name="bugday" Type="int" />
+          <Property Name="patates" Type="int" />
+          <Property Name="arpa" Type="int" />
+          <Property Name="tarim_urunleri_tarih" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_tbl_hayvan_tbl_iller">
+          <End Role="tbl_iller" Type="Self.tbl_iller" Multiplicity="0..1" />
+          <End Role="tbl_hayvan" Type="Self.tbl_hayvan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_iller">
+              <PropertyRef Name="il_id" />
+            </Principal>
+            <Dependent Role="tbl_hayvan">
+              <PropertyRef Name="il_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_meyve_tbl_iller">
+          <End Role="tbl_iller" Type="Self.tbl_iller" Multiplicity="0..1" />
+          <End Role="tbl_meyve" Type="Self.tbl_meyve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_iller">
+              <PropertyRef Name="il_id" />
+            </Principal>
+            <Dependent Role="tbl_meyve">
+              <PropertyRef Name="il_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_sebze_tbl_iller">
+          <End Role="tbl_iller" Type="Self.tbl_iller" Multiplicity="0..1" />
+          <End Role="tbl_sebze" Type="Self.tbl_sebze" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_iller">
+              <PropertyRef Name="il_id" />
+            </Principal>
+            <Dependent Role="tbl_sebze">
+              <PropertyRef Name="il_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_tarim_alani_ve_yuz_olcumu_tbl_iller">
+          <End Role="tbl_iller" Type="Self.tbl_iller" Multiplicity="0..1" />
+          <End Role="tbl_tarim_alani_ve_yuz_olcumu" Type="Self.tbl_tarim_alani_ve_yuz_olcumu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_iller">
+              <PropertyRef Name="il_id" />
+            </Principal>
+            <Dependent Role="tbl_tarim_alani_ve_yuz_olcumu">
+              <PropertyRef Name="il_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_tarim_urunleri_tbl_iller">
+          <End Role="tbl_iller" Type="Self.tbl_iller" Multiplicity="0..1" />
+          <End Role="tbl_tarim_urunleri" Type="Self.tbl_tarim_urunleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_iller">
+              <PropertyRef Name="il_id" />
+            </Principal>
+            <Dependent Role="tbl_tarim_urunleri">
+              <PropertyRef Name="il_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbWebModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_admin" EntityType="Self.tbl_admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_hayvan" EntityType="Self.tbl_hayvan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_iletisim" EntityType="Self.tbl_iletisim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_iller" EntityType="Self.tbl_iller" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_meyve" EntityType="Self.tbl_meyve" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_sebze" EntityType="Self.tbl_sebze" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_tarim_alani_ve_yuz_olcumu" EntityType="Self.tbl_tarim_alani_ve_yuz_olcumu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_tarim_urunleri" EntityType="Self.tbl_tarim_urunleri" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_hayvan_tbl_iller" Association="Self.FK_tbl_hayvan_tbl_iller">
+            <End Role="tbl_iller" EntitySet="tbl_iller" />
+            <End Role="tbl_hayvan" EntitySet="tbl_hayvan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_meyve_tbl_iller" Association="Self.FK_tbl_meyve_tbl_iller">
+            <End Role="tbl_iller" EntitySet="tbl_iller" />
+            <End Role="tbl_meyve" EntitySet="tbl_meyve" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_sebze_tbl_iller" Association="Self.FK_tbl_sebze_tbl_iller">
+            <End Role="tbl_iller" EntitySet="tbl_iller" />
+            <End Role="tbl_sebze" EntitySet="tbl_sebze" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_tarim_alani_ve_yuz_olcumu_tbl_iller" Association="Self.FK_tbl_tarim_alani_ve_yuz_olcumu_tbl_iller">
+            <End Role="tbl_iller" EntitySet="tbl_iller" />
+            <End Role="tbl_tarim_alani_ve_yuz_olcumu" EntitySet="tbl_tarim_alani_ve_yuz_olcumu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_tarim_urunleri_tbl_iller" Association="Self.FK_tbl_tarim_urunleri_tbl_iller">
+            <End Role="tbl_iller" EntitySet="tbl_iller" />
+            <End Role="tbl_tarim_urunleri" EntitySet="tbl_tarim_urunleri" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbWebModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbl_admin">
+          <Key>
+            <PropertyRef Name="admin_id" />
+          </Key>
+          <Property Name="admin_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="admin_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_hayvan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="il_id" Type="Int32" />
+          <Property Name="kucukbas" Type="Int32" />
+          <Property Name="buyukbas" Type="Int32" />
+          <NavigationProperty Name="tbl_iller" Relationship="Self.FK_tbl_hayvan_tbl_iller" FromRole="tbl_hayvan" ToRole="tbl_iller" />
+          <Property Name="hayvan_tarih" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_iller">
+          <Key>
+            <PropertyRef Name="il_id" />
+          </Key>
+          <Property Name="il_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="il_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="yuzolcumu" Type="Int32" />
+          <Property Name="nufus" Type="Int32" />
+          <Property Name="tarim_alani" Type="Int32" />
+          <NavigationProperty Name="tbl_hayvan" Relationship="Self.FK_tbl_hayvan_tbl_iller" FromRole="tbl_iller" ToRole="tbl_hayvan" />
+          <NavigationProperty Name="tbl_meyve" Relationship="Self.FK_tbl_meyve_tbl_iller" FromRole="tbl_iller" ToRole="tbl_meyve" />
+          <NavigationProperty Name="tbl_sebze" Relationship="Self.FK_tbl_sebze_tbl_iller" FromRole="tbl_iller" ToRole="tbl_sebze" />
+          <NavigationProperty Name="tbl_tarim_urunleri" Relationship="Self.FK_tbl_tarim_urunleri_tbl_iller" FromRole="tbl_iller" ToRole="tbl_tarim_urunleri" />
+          <NavigationProperty Name="tbl_tarim_alani_ve_yuz_olcumu" Relationship="DbWebModel.FK_tbl_tarim_alani_ve_yuz_olcumu_tbl_iller" FromRole="tbl_iller" ToRole="tbl_tarim_alani_ve_yuz_olcumu" />
+          <Property Name="il_tarih" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_meyve">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="il_id" Type="Int32" />
+          <Property Name="elma" Type="Int32" />
+          <Property Name="armut" Type="Int32" />
+          <Property Name="erik" Type="Int32" />
+          <Property Name="kayısı" Type="Int32" />
+          <Property Name="kiraz" Type="Int32" />
+          <NavigationProperty Name="tbl_iller" Relationship="Self.FK_tbl_meyve_tbl_iller" FromRole="tbl_meyve" ToRole="tbl_iller" />
+          <Property Name="meyve_tarih" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_sebze">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="il_id" Type="Int32" />
+          <Property Name="lahana" Type="Int32" />
+          <Property Name="domates" Type="Int32" />
+          <Property Name="fasulye" Type="Int32" />
+          <Property Name="salatalik" Type="Int32" />
+          <Property Name="yesil_biber" Type="Int32" />
+          <NavigationProperty Name="tbl_iller" Relationship="Self.FK_tbl_sebze_tbl_iller" FromRole="tbl_sebze" ToRole="tbl_iller" />
+          <Property Name="sebze_tarih" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_tarim_urunleri">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="il_id" Type="Int32" />
+          <Property Name="yesil_ot" Type="Int32" />
+          <Property Name="mısır" Type="Int32" />
+          <Property Name="bugday" Type="Int32" />
+          <Property Name="patates" Type="Int32" />
+          <Property Name="arpa" Type="Int32" />
+          <NavigationProperty Name="tbl_iller" Relationship="Self.FK_tbl_tarim_urunleri_tbl_iller" FromRole="tbl_tarim_urunleri" ToRole="tbl_iller" />
+          <Property Name="tarim_urunleri_tarih" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_tbl_hayvan_tbl_iller">
+          <End Role="tbl_iller" Type="Self.tbl_iller" Multiplicity="0..1" />
+          <End Role="tbl_hayvan" Type="Self.tbl_hayvan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_iller">
+              <PropertyRef Name="il_id" />
+            </Principal>
+            <Dependent Role="tbl_hayvan">
+              <PropertyRef Name="il_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_meyve_tbl_iller">
+          <End Role="tbl_iller" Type="Self.tbl_iller" Multiplicity="0..1" />
+          <End Role="tbl_meyve" Type="Self.tbl_meyve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_iller">
+              <PropertyRef Name="il_id" />
+            </Principal>
+            <Dependent Role="tbl_meyve">
+              <PropertyRef Name="il_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_sebze_tbl_iller">
+          <End Role="tbl_iller" Type="Self.tbl_iller" Multiplicity="0..1" />
+          <End Role="tbl_sebze" Type="Self.tbl_sebze" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_iller">
+              <PropertyRef Name="il_id" />
+            </Principal>
+            <Dependent Role="tbl_sebze">
+              <PropertyRef Name="il_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_tarim_urunleri_tbl_iller">
+          <End Role="tbl_iller" Type="Self.tbl_iller" Multiplicity="0..1" />
+          <End Role="tbl_tarim_urunleri" Type="Self.tbl_tarim_urunleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_iller">
+              <PropertyRef Name="il_id" />
+            </Principal>
+            <Dependent Role="tbl_tarim_urunleri">
+              <PropertyRef Name="il_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbWebEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tbl_admin" EntityType="Self.tbl_admin" />
+          <EntitySet Name="tbl_hayvan" EntityType="Self.tbl_hayvan" />
+          <EntitySet Name="tbl_iller" EntityType="Self.tbl_iller" />
+          <EntitySet Name="tbl_meyve" EntityType="Self.tbl_meyve" />
+          <EntitySet Name="tbl_sebze" EntityType="Self.tbl_sebze" />
+          <EntitySet Name="tbl_tarim_urunleri" EntityType="Self.tbl_tarim_urunleri" />
+          <AssociationSet Name="FK_tbl_hayvan_tbl_iller" Association="Self.FK_tbl_hayvan_tbl_iller">
+            <End Role="tbl_iller" EntitySet="tbl_iller" />
+            <End Role="tbl_hayvan" EntitySet="tbl_hayvan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_meyve_tbl_iller" Association="Self.FK_tbl_meyve_tbl_iller">
+            <End Role="tbl_iller" EntitySet="tbl_iller" />
+            <End Role="tbl_meyve" EntitySet="tbl_meyve" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_sebze_tbl_iller" Association="Self.FK_tbl_sebze_tbl_iller">
+            <End Role="tbl_iller" EntitySet="tbl_iller" />
+            <End Role="tbl_sebze" EntitySet="tbl_sebze" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_tarim_urunleri_tbl_iller" Association="Self.FK_tbl_tarim_urunleri_tbl_iller">
+            <End Role="tbl_iller" EntitySet="tbl_iller" />
+            <End Role="tbl_tarim_urunleri" EntitySet="tbl_tarim_urunleri" />
+          </AssociationSet>
+          <EntitySet Name="tbl_tarim_alani_ve_yuz_olcumu" EntityType="DbWebModel.tbl_tarim_alani_ve_yuz_olcumu" />
+          <AssociationSet Name="FK_tbl_tarim_alani_ve_yuz_olcumu_tbl_iller" Association="DbWebModel.FK_tbl_tarim_alani_ve_yuz_olcumu_tbl_iller">
+            <End Role="tbl_iller" EntitySet="tbl_iller" />
+            <End Role="tbl_tarim_alani_ve_yuz_olcumu" EntitySet="tbl_tarim_alani_ve_yuz_olcumu" />
+          </AssociationSet>
+          <EntitySet Name="tbl_iletisim" EntityType="DbWebModel.tbl_iletisim" />
+        </EntityContainer>
+        <EntityType Name="tbl_tarim_alani_ve_yuz_olcumu">
+          <Key>
+            <PropertyRef Name="tarim_alani_ve_yuz_olcumu_id" />
+          </Key>
+          <Property Name="tarim_alani_ve_yuz_olcumu_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="il_id" Type="Int32" />
+          <Property Name="nufus_bilgisi" Type="Int32" />
+          <Property Name="yuz_olcumu" Type="Int32" />
+          <Property Name="tarim_alani" Type="Int32" />
+          <NavigationProperty Name="tbl_iller" Relationship="DbWebModel.FK_tbl_tarim_alani_ve_yuz_olcumu_tbl_iller" FromRole="tbl_tarim_alani_ve_yuz_olcumu" ToRole="tbl_iller" />
+          <Property Name="tarim_alani_ve_yuz_olcumu_tarih" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_tbl_tarim_alani_ve_yuz_olcumu_tbl_iller">
+          <End Type="DbWebModel.tbl_iller" Role="tbl_iller" Multiplicity="0..1" />
+          <End Type="DbWebModel.tbl_tarim_alani_ve_yuz_olcumu" Role="tbl_tarim_alani_ve_yuz_olcumu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_iller">
+              <PropertyRef Name="il_id" />
+            </Principal>
+            <Dependent Role="tbl_tarim_alani_ve_yuz_olcumu">
+              <PropertyRef Name="il_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_iletisim">
+          <Key>
+            <PropertyRef Name="iletisim_id" />
+          </Key>
+          <Property Name="iletisim_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="yorumcu_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="yorumcu_soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="gorus_ve_oneriler" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="tc_kimlik_no" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="dogum_yili" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DbWebModelStoreContainer" CdmEntityContainer="DbWebEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DbWebModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_admin">
+            <EntityTypeMapping TypeName="DbWebModel.tbl_admin">
+              <MappingFragment StoreEntitySet="tbl_admin">
+                <ScalarProperty Name="admin_id" ColumnName="admin_id" />
+                <ScalarProperty Name="admin_adi" ColumnName="admin_adi" />
+                <ScalarProperty Name="sifre" ColumnName="sifre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_hayvan">
+            <EntityTypeMapping TypeName="DbWebModel.tbl_hayvan">
+              <MappingFragment StoreEntitySet="tbl_hayvan">
+                <ScalarProperty Name="hayvan_tarih" ColumnName="hayvan_tarih" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="il_id" ColumnName="il_id" />
+                <ScalarProperty Name="kucukbas" ColumnName="kucukbas" />
+                <ScalarProperty Name="buyukbas" ColumnName="buyukbas" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_iller">
+            <EntityTypeMapping TypeName="DbWebModel.tbl_iller">
+              <MappingFragment StoreEntitySet="tbl_iller">
+                <ScalarProperty Name="il_tarih" ColumnName="il_tarih" />
+                <ScalarProperty Name="il_id" ColumnName="il_id" />
+                <ScalarProperty Name="il_adi" ColumnName="il_adi" />
+                <ScalarProperty Name="yuzolcumu" ColumnName="yuzolcumu" />
+                <ScalarProperty Name="nufus" ColumnName="nufus" />
+                <ScalarProperty Name="tarim_alani" ColumnName="tarim_alani" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_meyve">
+            <EntityTypeMapping TypeName="DbWebModel.tbl_meyve">
+              <MappingFragment StoreEntitySet="tbl_meyve">
+                <ScalarProperty Name="meyve_tarih" ColumnName="meyve_tarih" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="il_id" ColumnName="il_id" />
+                <ScalarProperty Name="elma" ColumnName="elma" />
+                <ScalarProperty Name="armut" ColumnName="armut" />
+                <ScalarProperty Name="erik" ColumnName="erik" />
+                <ScalarProperty Name="kayısı" ColumnName="kayısı" />
+                <ScalarProperty Name="kiraz" ColumnName="kiraz" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_sebze">
+            <EntityTypeMapping TypeName="DbWebModel.tbl_sebze">
+              <MappingFragment StoreEntitySet="tbl_sebze">
+                <ScalarProperty Name="sebze_tarih" ColumnName="sebze_tarih" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="il_id" ColumnName="il_id" />
+                <ScalarProperty Name="lahana" ColumnName="lahana" />
+                <ScalarProperty Name="domates" ColumnName="domates" />
+                <ScalarProperty Name="fasulye" ColumnName="fasulye" />
+                <ScalarProperty Name="salatalik" ColumnName="salatalik" />
+                <ScalarProperty Name="yesil_biber" ColumnName="yesil_biber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_tarim_urunleri">
+            <EntityTypeMapping TypeName="DbWebModel.tbl_tarim_urunleri">
+              <MappingFragment StoreEntitySet="tbl_tarim_urunleri">
+                <ScalarProperty Name="tarim_urunleri_tarih" ColumnName="tarim_urunleri_tarih" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="il_id" ColumnName="il_id" />
+                <ScalarProperty Name="yesil_ot" ColumnName="yesil_ot" />
+                <ScalarProperty Name="mısır" ColumnName="mısır" />
+                <ScalarProperty Name="bugday" ColumnName="bugday" />
+                <ScalarProperty Name="patates" ColumnName="patates" />
+                <ScalarProperty Name="arpa" ColumnName="arpa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_tarim_alani_ve_yuz_olcumu">
+            <EntityTypeMapping TypeName="DbWebModel.tbl_tarim_alani_ve_yuz_olcumu">
+              <MappingFragment StoreEntitySet="tbl_tarim_alani_ve_yuz_olcumu">
+                <ScalarProperty Name="tarim_alani_ve_yuz_olcumu_tarih" ColumnName="tarim_alani_ve_yuz_olcumu_tarih" />
+                <ScalarProperty Name="tarim_alani" ColumnName="tarim_alani" />
+                <ScalarProperty Name="yuz_olcumu" ColumnName="yuz_olcumu" />
+                <ScalarProperty Name="nufus_bilgisi" ColumnName="nufus_bilgisi" />
+                <ScalarProperty Name="il_id" ColumnName="il_id" />
+                <ScalarProperty Name="tarim_alani_ve_yuz_olcumu_id" ColumnName="tarim_alani_ve_yuz_olcumu_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_iletisim">
+            <EntityTypeMapping TypeName="DbWebModel.tbl_iletisim">
+              <MappingFragment StoreEntitySet="tbl_iletisim">
+                <ScalarProperty Name="dogum_yili" ColumnName="dogum_yili" />
+                <ScalarProperty Name="tc_kimlik_no" ColumnName="tc_kimlik_no" />
+                <ScalarProperty Name="gorus_ve_oneriler" ColumnName="gorus_ve_oneriler" />
+                <ScalarProperty Name="yorumcu_soyadi" ColumnName="yorumcu_soyadi" />
+                <ScalarProperty Name="yorumcu_adi" ColumnName="yorumcu_adi" />
+                <ScalarProperty Name="iletisim_id" ColumnName="iletisim_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

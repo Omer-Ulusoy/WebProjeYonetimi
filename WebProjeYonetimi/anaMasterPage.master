@@ -1,0 +1,69 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="anaMasterPage.master.cs" Inherits="anaMasterPage" %>
+
+
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>Türkiye Nüfus ve Üretim Haritası</title>
+    <link rel = "icon" href = "https://iconarchive.com/download/i65939/hopstarter/flag-borderless/Turkey.ico" type = "image/x-icon">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="Css/jquery.qtip.min.css" rel="stylesheet" />
+    <link href="Css/normalize.css" rel="stylesheet" />
+    <link href="Css/style.css" rel="stylesheet" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet" />
+	<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+
+	</asp:ContentPlaceHolder>
+</head>
+<body>
+
+
+<section class="header" style="background: #f8edeb;">
+	<div class="header-container">
+		<br />
+		<div class="header-title">
+			
+			<h1>Türkiye İllere Göre Nüfus ve Tarım Bilgileri</h1>
+		</div>
+		<br />
+		<div class="menu">
+			<ul>
+				<li><a class="button-default" href="Anasayfa.aspx">Anasayfa</a></li>
+				<li><a class="button-default" href="Hakkimizda.aspx">Hakkımızda</a></li>
+				<li><a class="button-default" href="Iletisim.aspx">İletişim</a></li>
+				<li><a class="button-default" href="AdminGiris.aspx">Giriş</a></li>
+			</ul>
+		</div>
+	</div>
+	<br />
+</section>
+
+	<asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+
+	</asp:ContentPlaceHolder>
+
+<section class="footer">
+    <h4>
+		Footer Alanıdır
+	</h4>
+</section>
+    <script src="Js/jquery-1.8.0.min.js"></script>
+    <script src="Js/jquery.qtip.min.js"></script>
+    <script src="Js/paths.js"></script>
+    <script src="Js/raphael-min.js"></script>
+    <script src="Js/script.js"></script>
+    <script src="Js/turkiye.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#map svg path").click(
+		  function() {
+			var id=$(this).attr("id");
+			$("#sehir").text(id);
+		 });
+	})
+</script>
+</body>
+</html>
